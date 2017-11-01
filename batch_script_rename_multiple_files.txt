@@ -1,0 +1,3 @@
+#command to copy and rename files in one go.
+
+for /l %A in (1,1,100) do copy "file.txt" "file-%A.txt"
