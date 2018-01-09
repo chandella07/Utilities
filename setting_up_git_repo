@@ -61,3 +61,13 @@ Using git
 - git add .
 - git commit -m "openssh vm files first phase"
 - git push origin master
+
+
+-------------------
+git merge to master
+-------------------
+
+- git checkout master
+- git merge Development
+
+
