@@ -1,0 +1,103 @@
+------------------------------------------
+Upload packages to pypi repository:
+------------------------------------------
+
+- Create account on pypi repo: (my username : dchandella)
+  link: http://pypi.python.org/pypi?%3Aaction=register_form
+  NOTE: you can also create account on test environment (link: http://testpypi.python.org/pypi?%3Aaction=register_form)
+  
+- Create a .pypirc configuration file and place it in user HOME dir 
+  - on linux you can find out HOME dir by cmd : echo $HOME
+  - on windows you can find out HOME dir by cmd : echo %HOMEPATH%
+    - on windows .pypirc file can't be created directly so create it through cmd line by cmd : echo > .pypirc
+	
+- Once .pypirc file is created add below content in it.
+==========================================
+[distutils]
+index-servers =
+  pypi
+
+[pypi]
+repository=https://upload.pypi.org/legacy/
+username=dchandella
+password=<passwd>
+==========================================
+
+- Every package on PyPI needs to have a file called setup.py at the root of the directory. If your'e using a markdown-formatted read me file you'll also need a setup.cfg file. Also, you'll want a LICENSE.txt file describing what can be done with your code. So if I've been working on a library called mypackage, my directory structure would look like this:
+
+root-dir/   # arbitrary working directory name
+  setup.py
+  setup.cfg
+  LICENSE.txt
+  README.md
+  mypackage/
+    __init__.py
+    foo.py
+    bar.py
+    baz.py
+	
+- Add below content in setup.py
+============================================
+from distutils.core import setup
+setup(
+  name = 'mypackage',
+  packages = ['mypackage'], # this must be the same as the name above
+  version = '0.1',
+  description = 'My First Project',
+  author = 'dchandella',
+  author_email = 'deepchandila07@gmail.com',
+  #url = 'https://github.com/peterldowns/mypackage', # use the URL to the github repo
+  #download_url = 'https://github.com/peterldowns/mypackage/archive/0.1.tar.gz', # I'll explain this in a second
+  keywords = ['testing', 'logging', 'example'], # arbitrary keywords
+  classifiers = [],
+)
+=============================================
+NOTE: name mypackage can be already there on repo so you can change the name.
+      also url and download url is for picking code from github, if you are on your local you can go with same dir structure.
+	  
+	  The download_url is a link to a hosted file with your repository's code. Github will host this for you, but only if you create a git tag. In your repository, type: git tag 0.1 -m "Adds a tag so that we can put this on PyPI.". Then, type git tag to show a list of tags — you should see 0.1 in the list. Type git push --tags origin master to update your code on Github with the latest tag information. Github creates tarballs for download at https://github.com/{username}/{module_name}/archive/{tag}.tar.gz.
+	  
+	
+- Add below content in setup.cfg file.
+=============================================
+[metadata]
+description-file = README.md
+=============================================
+
+- For license file:
+  - This file will contain whichver license you want your code to have. I tend to use the MIT license.
+
+- Register your package using below cmd:
+  - python setup.py register -r pypi
+  NOTE: this step may no be neceesaary it may show some msg like this is not required.
+  
+
+- Upload your package using below cmd:
+  - python setup.py sdist upload -r pypi
+  NOTE: This will show text as 200 OK
+  
+
+After this package is uploaded to pypi repo, you can go to repo link: https://pypi.python.org/
+and search for package, if not found you can login with your account credentials and see this in your packages.
+
+- install your package
+  - pip install mypackage
+  
+- uninstall your package
+  - pip uninstall mypackage
+  
+--------------------------------------------------------------
+To remove your package
+--------------------------------------------------------------
+
+- Go to pypi repo.
+- login with your credentials.
+- click on your packages
+- then select the package release or at the end of the project select the delete complete project.
+
+--------------------------------------------------
+If face any issues, follow blog: http://peterdowns.com/posts/first-time-with-pypi.html
+---------------------------------------------------
+
+
+    
