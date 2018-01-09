@@ -1,0 +1,63 @@
+--------------
+On Git server
+--------------
+
+1) Create a repo dir.
+ - mkdir vm
+
+2) Initialize git repo.
+ - git init
+
+3) Git config file should look like this:
+
+[root@ci_git_master vm]# cat .git/config
+[core]
+        repositoryformatversion = 0
+        filemode = true
+        bare = true
+        logallrefupdates = true
+        shareRepository = group
+
+4) Add permissions to git repo:
+
+ - chgrp -R git .
+ - chmod -R g+rwX .
+ - git config core.shareRepository group
+
+-------------
+On Git client
+-------------
+
+1) Create a repo dir.
+ - mkdir vm
+
+2) Initialize git repo.
+ - git init
+
+3) if you are cloning the repo then setup is all done (mean origin is already setup)
+   if want to add content from client, add origin in .git/config file.
+   vim .git/config
+   add url in origin, like below
+================================
+cat .git/config
+[core]
+        repositoryformatversion = 0
+        filemode = true
+        bare = false
+        logallrefupdates = true
+[remote "origin"]
+        url = ssh://git@10.239.57.121/images/ansible/openssh/vm/.git
+        fetch = +refs/heads/*:refs/remotes/origin/*
+[branch "master"]
+        remote = origin
+        merge = refs/heads/master
+=================================
+
+
+-----------
+Using git
+-----------
+
+- git add .
+- git commit -m "openssh vm files first phase"
+- git push origin master
