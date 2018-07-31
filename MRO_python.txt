@@ -1,0 +1,57 @@
+MRO in Python 2: (with base class) (old algo)
+
+depth first and then left to right.
+
+e.g
+
+A
+B
+C
+D(A,B)
+E(B,C)
+F(D,E)
+
+then order would be:
+F,D,A,B,E,B,C
+
+removing dup:
+F,D,A,B,E,C
+
+
+
+
+linerization for MRO in python3: (linearization Algo) (new algo)
+
+if class c inheriting (B1 to BN classes)
+e.g C(A,B)
+
+L[C(B1...BN)] = C+merge(L[B1]...L[BN], B1....BN)
+
+if A is a good head: (good head means not inheriting directly Base class(object class))
+then repeat same lenearization for A as well.
+
+e.g
+A
+B(A)
+C(A)
+D(B,C)
+
+then order would be:
+D,B,C,A (removing bad head A from in-between)
+
+Error case:
+X()
+Y()
+A(X,Y)
+B(Y,X)
+F(A,B)
+
+python 2 order : F,A,X,Y,B
+
+python 3 error:
+L[F(A,B)] = F + merge(L[A]..L[B], A..B)
+
+L[A(X,Y)] = A + merge(L[X], L[Y], X, Y) = A, X, Y
+L[B(Y,X)] = B + merge(L[Y], L[X], Y, X) = B, Y, X
+
+F,A,B(Y,X) Error not linearization for (Y,X) at the end.
