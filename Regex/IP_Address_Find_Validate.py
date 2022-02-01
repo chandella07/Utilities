@@ -17,9 +17,9 @@ result = reg1.findall(logs)
 for i in result:
     try:
         if reg2.match(i).group():
-            print "Valid IP - {}".format(i)
+            print("Valid IP - {}".format(i))
     except AttributeError:
-        print "Not a Valid IP - {}".format(i)
+        print("Not a Valid IP - {}".format(i))
 
 
     
